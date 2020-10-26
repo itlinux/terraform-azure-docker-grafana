@@ -1,1 +1,93 @@
-= Docker and Grafana testing for Azure 
+
+= Install CentOS 7 with Docker on AZURE
+
+This creates a CentOS VM running docker and for demo it installs nginx
+I use it as a base then add other docker containers as needed.
+
+== SSH key
+It will generate an ssh key pair, in order to ssh into the box you need to load the private key.
+
+=== Steps to load the ssh key
+Select the output of the terraform saying tls_private_key and copy all until the -----END
+Make sure you do not copy extra spaces etc.
+
+----
+touch myprivatekey
+paste the copied info do not paste the tls_private_key part 
+-----BEGIN RSA PRIVATE KEY-----
+chmod 400 myprivatekey
+ssh-add -D
+ssh-add myprivatekey
+ssh into your box now
+----
+
+My key file will look like this:
+----
+    -----BEGIN RSA PRIVATE KEY-----
+    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
+    -----END RSA PRIVATE KEY-----
+----
+
+== What steps are needed
+* Make changes to add new ports as needed into the securitygrouprules file
+
+
+== Files included are:
+** firewall (rules to be set)
+** network (network autogen)
+** vm (builds a centos 7 with docker and runs docker nginx )
+** output fqdn
+** output to show public IP
+** nginx uses port 80
+
+== Grafana 
+Default user/pass is admin admin. The first time you login it will ask you for a new password
+you can use my prometheus.yml just need to update the grafana to point to my URL file
