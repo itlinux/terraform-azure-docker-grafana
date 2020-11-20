@@ -2,7 +2,7 @@ output public_ip {
   value = azurerm_linux_virtual_machine.linuxbox.public_ip_address
 }
 output coder_password {
-  value = random_password.coder-password.result
+  value = random_password.grafana-password.result
 }
 output tls_private_key {
   value = tls_private_key.docker_ssh.private_key_pem
