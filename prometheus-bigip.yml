@@ -1,0 +1,26 @@
+# global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Replace the targets with the right URL and replace username / password to match your BIG-IP
+# NOTE: TLS config is set to true since we are using BIG-IP self signed Cert! Change it to false if you have your own cert
+scrape_configs:
+  - job_name: 'localhost-remo'
+    static_configs:
+      - targets: ['10.1.0.4:9100'] # the address of an application that exposes metrics for prometheus
+  - job_name: 'BIG-IP'
+    metrics_path: /mgmt/shared/telemetry/pullconsumer/My_Pull_Consumer
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    scheme: https
+    static_configs:
+    - targets:
+      - mybigip.westus.cloudapp.azure.com
+    basic_auth:
+      username: admin
+      password: thisismysecurepasswordforbigip
+    tls_config:
+      insecure_skip_verify: true
+
