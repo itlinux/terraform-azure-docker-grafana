@@ -89,5 +89,5 @@ My key file will look like this:
 ** nginx uses port 80
 
 == Grafana 
-Default user/pass is admin admin. The first time you login it will ask you for a new password
+Default user/pass is admin password is generated. The first time you login it will ask you for a new password
 you can use my prometheus.yml just need to update the grafana to point to my URL file

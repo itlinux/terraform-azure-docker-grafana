@@ -2,7 +2,7 @@ resource random_integer "password-length" {
   min = 12
   max = 25
 }
-resource "random_password" "coder-password" {
+resource "random_password" "grafana-password" {
   length           = random_integer.password-length.result
   min_upper        = 1
   min_lower        = 1
